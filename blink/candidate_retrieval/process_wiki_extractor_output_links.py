@@ -64,7 +64,7 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
             counter += 1
             with open(f'{output_file_path}_{counter}', "wb") as f:
                 pickle.dump(id_title2parsed_obj, f, protocol=4)
-            id_title2parsed_obj = {}
+            # id_title2parsed_obj = {}
             gc.collect()
             print("Processed: {:.2f}%".format(c * 100 / num_lines))
 
