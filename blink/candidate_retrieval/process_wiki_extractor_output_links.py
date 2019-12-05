@@ -74,7 +74,7 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
         if c % 1000000 == 0:
             print("Processed: {:.2f}%".format(c * 100 / num_lines), c)
 
-        if c in [save_steps]:
+        if c in save_steps:
             counter += 1
             save_partail_dump(id_title2parsed_obj, counter)
             id_title2parsed_obj = {}
