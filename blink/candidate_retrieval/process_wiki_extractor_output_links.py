@@ -15,6 +15,7 @@ import urllib.parse
 import regex
 import gc
 
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
@@ -50,9 +51,19 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
     for line in f:
         num_lines += 1
 
+save_steps = [num_lines // 4, num_lines // 4 * 2, num_lines // 4 * 3]
+
 c = 0
 pattern = re.compile("(<a href=([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>)")
 docs_failed_xml = 0
+
+
+def save_partail_dump(data, counter):
+    print(f"Saving part {counter}...")
+    with open(f'{output_file_path}_partial_{counter}', "wb") as f:
+        pickle.dump(data, f, protocol=4)
+    print("Done")
+
 
 counter = 0
 with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f:
@@ -60,13 +71,13 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
         c += 1
 
         if c % 1000000 == 0:
-            print("* * *")
-            counter += 1
-            with open(f'{output_file_path}_{counter}', "wb") as f:
-                pickle.dump(id_title2parsed_obj, f, protocol=4)
-            # id_title2parsed_obj = {}
-            gc.collect()
             print("Processed: {:.2f}%".format(c * 100 / num_lines))
+
+        if c in [save_steps]:
+            counter += 1
+            save_partail_dump(id_title2parsed_obj, counter)
+            id_title2parsed_obj = {}
+            gc.collect()
 
         if line.startswith("<doc id="):
             doc_xml = ET.fromstring("{}{}".format(line, xml_end_tag))
@@ -136,6 +147,8 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
 
 print("Processed: {:.2f}%".format(c * 100 / num_lines))
 print("Dumping", output_file_path)
-with open(output_file_path, "wb") as f:
-    pickle.dump(id_title2parsed_obj, f, protocol=4)
+counter += 1
+save_partail_dump(id_title2parsed_obj, counter)
+# with open(output_file_path, "wb") as f:
+#     pickle.dump(id_title2parsed_obj, f, protocol=4)
 # print('Portion of documents with improper xml: {:.2f}%'.format(docs_failed_xml*100/len(id_title2parsed_obj)))
