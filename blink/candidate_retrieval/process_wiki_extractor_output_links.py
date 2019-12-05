@@ -52,6 +52,7 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
         num_lines += 1
 
 save_steps = [num_lines // 4, num_lines // 4 * 2, num_lines // 4 * 3]
+print(save_steps, "of", num_lines)
 
 c = 0
 pattern = re.compile("(<a href=([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>)")
@@ -71,7 +72,7 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
         c += 1
 
         if c % 1000000 == 0:
-            print("Processed: {:.2f}%".format(c * 100 / num_lines))
+            print("Processed: {:.2f}%".format(c * 100 / num_lines), c)
 
         if c in [save_steps]:
             counter += 1
