@@ -13,6 +13,7 @@ import pickle
 import sys
 import urllib.parse
 import regex
+import gc
 
 parser = argparse.ArgumentParser()
 
@@ -59,10 +60,12 @@ with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f
         c += 1
 
         if c % 1000000 == 0:
+            print("* * *")
             counter += 1
             with open(f'{output_file_path}_{counter}', "wb") as f:
                 pickle.dump(id_title2parsed_obj, f, protocol=4)
-            del id_title2parsed_obj
+            id_title2parsed_obj = {}
+            gc.collect()
             print("Processed: {:.2f}%".format(c * 100 / num_lines))
 
         if line.startswith("<doc id="):
