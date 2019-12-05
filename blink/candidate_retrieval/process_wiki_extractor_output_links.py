@@ -53,14 +53,16 @@ c = 0
 pattern = re.compile("(<a href=([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>)")
 docs_failed_xml = 0
 
-counter = 1
+counter = 0
 with io.open(input_file_path, mode="rt", encoding="utf-8", errors="ignore") as f:
     for line in f:
         c += 1
 
         if c % 1000000 == 0:
+            counter += 1
             with open(f'{output_file_path}_{counter}', "wb") as f:
                 pickle.dump(id_title2parsed_obj, f, protocol=4)
+            del id_title2parsed_obj
             print("Processed: {:.2f}%".format(c * 100 / num_lines))
 
         if line.startswith("<doc id="):
