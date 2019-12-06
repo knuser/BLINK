@@ -22,17 +22,19 @@ en_index_precomputed="$data_folder_path/index_enwiki.db"
 
 if [[ ! -f $wikipedia_xml_dump ]]; then
   echo "downloading $wikipedia_xml_dump"
-  wget https://dumps.wikimedia.org/enwiki/20191201/enwiki-20191201-pages-articles.xml.bz2 -O $wikipedia_xml_dump
+#  wget https://dumps.wikimedia.org/enwiki/20191201/enwiki-20191201-pages-articles.xml.bz2 -O $wikipedia_xml_dump
+  aria2c -x 4 -k 10M https://dumps.wikimedia.org/enwiki/20191201/enwiki-20191201-pages-articles.xml.bz2 -o $wikipedia_xml_dump
 fi
 
 if [[ ! -f $wikidata_json_dump ]]; then
   echo "downloading $wikidata_json_dump"
-  wget https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2 -O $wikidata_json_dump
+#  wget https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2 -O $wikidata_json_dump
+  aria2c -x 4 -k 10M https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2 -o $wikidata_json_dump
 fi
 
 if [[ ! -f $en_index_precomputed ]]; then
   echo "downloading $en_index_precomputed"
-  wget https://public.ukp.informatik.tu-darmstadt.de/wikimapper/index_enwiki-20190420.db -O $en_index_precomputed
+  aria2c -x 4 -k 10M https://public.ukp.informatik.tu-darmstadt.de/wikimapper/index_enwiki-20190420.db -O $en_index_precomputed
 fi
 
 echo "Processing wikipedia dump for text"

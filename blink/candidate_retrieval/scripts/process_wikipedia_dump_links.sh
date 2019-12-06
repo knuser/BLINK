@@ -59,14 +59,15 @@ partial_filtered_wikipedia_data_file_path=${filtered_wikipedia_data_file_path}_p
 
 # processing
 if [[ ! -f $partial_filtered_wikipedia_data_file_path ]]; then
-  python blink/candidate_retrieval/process_wiki_extractor_output_links.py --input $full_wikipedia_data_file_path --output $filtered_wikipedia_data_file_path
+#  python blink/candidate_retrieval/process_wiki_extractor_output_links.py --input $full_wikipedia_data_file_path --output $filtered_wikipedia_data_file_path
+  python blink/candidate_retrieval/process_wiki_extractor_output_links_oryg.py --input $full_wikipedia_data_file_path --output $filtered_wikipedia_data_file_path
 else
   echo "Partials and $partial_filtered_wikipedia_data_file_path already created"
 fi
 
 # concat
-if [[ ! -f $filtered_wikipedia_data_file_path ]]; then
-  python blink/candidate_retrieval/process_wiki_extractor_output_links_concat.py --input $partial_filtered_wikipedia_data_file_path --output $filtered_wikipedia_data_file_path
-else
-  echo "Finall $filtered_wikipedia_data_file_path already created"
-fi
+#if [[ ! -f $filtered_wikipedia_data_file_path ]]; then
+#  python blink/candidate_retrieval/process_wiki_extractor_output_links_concat.py --input $partial_filtered_wikipedia_data_file_path --output $filtered_wikipedia_data_file_path
+#else
+#  echo "Finall $filtered_wikipedia_data_file_path already created"
+#fi
