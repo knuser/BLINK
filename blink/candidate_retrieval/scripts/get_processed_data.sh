@@ -34,7 +34,7 @@ fi
 
 if [[ ! -f $en_index_precomputed ]]; then
   echo "downloading $en_index_precomputed"
-  aria2c -x 4 -k 10M https://public.ukp.informatik.tu-darmstadt.de/wikimapper/index_enwiki-20190420.db -O $en_index_precomputed
+  aria2c -x 4 -k 10M https://public.ukp.informatik.tu-darmstadt.de/wikimapper/index_enwiki-20190420.db -o $en_index_precomputed
 fi
 
 echo "Processing wikipedia dump for text"
