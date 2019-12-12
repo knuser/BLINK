@@ -11,6 +11,9 @@ import emoji
 import time
 import os
 
+from tqdm import tqdm
+
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
@@ -169,7 +172,7 @@ solr = pysolr.Solr(
 
 c = 0
 
-for r in range(r, len(ingestion_data), step):
+for r in tqdm(range(r, len(ingestion_data), step)):
     c += 1
 
     if (c % 10) == 0:
