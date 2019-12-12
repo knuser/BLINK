@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Copyright (c) Facebook, Inc. and its affiliates.
 # All rights reserved.
 #
@@ -19,7 +21,7 @@ processed_data_file_path="$data_folder/KB_data/title2enriched_parsed_obj_plus.p"
 
 # Create the collecitons (requires sudo access!)
 # sudo bash create_solr_collections.sh wikipedia_plus wikipedia_plus_no_dis wikipedia_plus_no_dis_min_20 wikipedia_plus_no_dis_min_40
-sudo bash blink/candidate_retrieval/scripts/create_solr_collections.sh wikipedia
+bash blink/candidate_retrieval/scripts/create_solr_collections.sh wikipedia
 
 # Enriched + sentence data
 bash blink/candidate_retrieval/scripts/ingest_data.sh --processed_data_file_path $processed_data_file_path --collection_name wikipedia --add_sentence_data
